@@ -10,7 +10,7 @@ describe 'Books API', type: :request do
     it 'returns all books' do
       get '/api/books'
       expect(response).to have_http_status(200)
-      expect(JSON.parse(response.body).length).to eq(2)
+      expect(JSON.parse(response.body)["result"].length).to eq(2)
     end
   end
   describe 'POST /books' do

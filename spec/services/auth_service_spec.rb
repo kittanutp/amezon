@@ -1,9 +1,20 @@
 require 'rails_helper'
 
-describe AuthenticationService do
+describe AuthService do
+  let!(:user) {FactoryBot.create(:user, username: 'test')}
   describe '.call' do
     it 'return token' do
-      # expect(describe_class.call).to eq('123')
+      token = described_class.call(user)
+      decoded_token = JWT.decode(token, described_class::HMAC_SECRET, true, {alghorithm: described_class::ALGHORITHM_TYPE})
+      expect(decoded_token).to eq(
+        [
+        {
+          "id" => user.id,
+          "username" => user.username
+        },
+        {"alg" => described_class::ALGHORITHM_TYPE}
+        ]
+      )
     end
   end
 end
