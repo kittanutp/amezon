@@ -1,7 +1,7 @@
 class AuthService
   HMAC_SECRET = 'my$ecretK3y'
   ALGHORITHM_TYPE = 'HS256'
-  def self.call(user)
+  def self.encode(user)
     payload = {id: user.id, username: user.username}
     return JWT.encode(payload, HMAC_SECRET, ALGHORITHM_TYPE)
   end
