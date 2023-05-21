@@ -39,7 +39,6 @@ class ApplicationController < ActionController::API
   def authorize_user
     token, _ = token_and_options(request)
     begin
-      puts AuthService.decode(token)
       User.find(AuthService.decode(token))
     rescue ActiveRecord::RecordNotFound
       render json: {message: AuthService.decode(token)}, status: 401
