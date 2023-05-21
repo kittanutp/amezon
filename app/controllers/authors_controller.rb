@@ -1,4 +1,6 @@
 class AuthorsController < ApplicationController
+  before_action :authorize_user, only: [:create, :destroy, :update]
+
   def index
     data = paginate(Author)
     data[:result] = Author.limit(params[:limit]).offset(get_offset).all

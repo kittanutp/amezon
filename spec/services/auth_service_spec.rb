@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe AuthService do
-  let!(:user) {FactoryBot.create(:user, username: 'test')}
+  let!(:user) {FactoryBot.create(:user, username: 'test', password: 'P@ssword1#')}
   describe '.call' do
     it 'return token' do
       token = described_class.call(user)

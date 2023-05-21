@@ -1,4 +1,7 @@
 class BooksController < ApplicationController
+
+  before_action :authorize_user, only: [:create, :destroy, :update]
+
   def index
     books = Book.limit(params[:limit]).offset(get_offset).all
     data = paginate(Book)

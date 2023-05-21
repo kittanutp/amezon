@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::API
+  include ActionController::HttpAuthentication::Token
   rescue_from StandardError, with: :exception_handler
 
   def get_offset
@@ -29,6 +30,21 @@ class ApplicationController < ActionController::API
         next_page: false,
         total_page: 1
       }
+    end
+
+  end
+
+  protected
+
+  def authorize_user
+    token, _ = token_and_options(request)
+    begin
+      puts AuthService.decode(token)
+      User.find(AuthService.decode(token))
+    rescue ActiveRecord::RecordNotFound
+      render json: {message: AuthService.decode(token)}, status: 401
+    rescue
+      render json: {message: "Unauthorized"}, status: 401
     end
 
   end
